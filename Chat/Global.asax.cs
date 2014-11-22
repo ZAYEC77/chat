@@ -16,6 +16,8 @@ namespace Chat
     {
         protected void Application_Start()
         {
+            RouteTable.Routes.MapHubs();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -23,8 +25,7 @@ namespace Chat
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            RouteTable.Routes.MapHubs();
-
+            
         }
     }
 }

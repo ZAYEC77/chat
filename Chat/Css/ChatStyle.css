@@ -66,17 +66,13 @@
 
     .chatRoom .content
     {
-        height: 300px;
+        min-height: 300px;
         clear: both;
     }
 
         .chatRoom .content .chatWindow
         {
-            float: left;
-            width: 409px;
-            height: 300px;
-            border-right: solid 1px #5f9482;
-            overflow-y: scroll;
+            min-height: 260px;
         }
 
             .chatRoom .content .chatWindow .message
@@ -91,9 +87,7 @@
 
         .chatRoom .content .users
         {
-            float: right;
-            width: 240px;
-            height: 300px;
+            min-height: 260px;
         }
 
             .chatRoom .content .users .user
