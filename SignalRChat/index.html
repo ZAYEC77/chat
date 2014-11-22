@@ -298,25 +298,32 @@
                 </div>
             </div>
 
-            <div id="divChat" class="chatRoom">
-                <div class="title">
-                    Welcome to Chat Room [<span id='spanUser'></span>]
+            <div id="divChat" class="chatRoom panel panel-primary">
 
-                </div>
-                <div class="content">
-                    <div id="divChatWindow" class="chatWindow">
-                    </div>
-                    <div id="divusers" class="users">
-                    </div>
-                </div>
-                <div class="messageBar">
-                    <input class="textbox" type="text" id="txtMessage" />
-                    <input id="btnSendMsg" type="button" value="Send" class="submitButton" />
-                </div>
-            </div>
+  <div class="title panel-heading">
+    <h3 class="panel-title"> Welcome to Chat Room [<span id='spanUser'></span>]</h3>         
+  </div>
+  <div class="panel-body">
+    <div class="content row">
+        <div id="divChatWindow" class="chatWindow col-md-8">
+        
+        </div>
+        <div id="divusers" class="users col-md-4">
 
+        </div>
+    </div>
+    <div class="messageBar">
+        <input class="textbox" type="text" id="txtMessage" />
+        <input id="btnSendMsg" type="button" value="Send" class="submitButton" />
+    </div>
+    </div>
+    
+            <div class="col-md-12">
+                
             <input id="hdId" type="hidden" />
             <input id="hdUserName" type="hidden" />
+            </div>
+
         </div>
     </div>
 
