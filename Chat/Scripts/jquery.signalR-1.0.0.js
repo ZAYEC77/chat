@@ -1,7 +1,7 @@
 /* jquery.signalR.core.js */
 /*global window:false */
 /*!
- * ASP.NET SignalR JavaScript Library v1.0.1
+ * ASP.NET SignalR JavaScript Library v1.0.0
  * http://signalr.net/
  *
  * Copyright Microsoft Open Technologies, Inc. All rights reserved.
@@ -86,11 +86,7 @@
 
                 connection.reconnecting(function () {
                     var connection = this;
-
-                    // Guard against state changing in a previous user defined even handler
-                    if (connection.state === signalR.connectionState.reconnecting) {
-                        stopReconnectingTimeout = window.setTimeout(function () { onReconnectTimeout(connection); }, connection.disconnectTimeout);
-                    }
+                    stopReconnectingTimeout = window.setTimeout(function () { onReconnectTimeout(connection); }, connection.disconnectTimeout);
                 });
 
                 connection.stateChanged(function (data) {
@@ -233,7 +229,7 @@
 
         reconnectDelay: 2000,
 
-        disconnectTimeout: 30000, // This should be set by the server in response to the negotiate request (30s default)
+        disconnectTimeout: 40000, // This should be set by the server in response to the negotiate request (40s default)
 
         keepAliveWarnAt: 2 / 3, // Warn user of slow connection if we breach the X% mark of the keep alive timeout
 
@@ -387,9 +383,6 @@
             };
 
             var url = connection.url + "/negotiate";
-
-            url = signalR.transports._logic.addQs(url, connection);
-
             connection.log("Negotiating with '" + url + "'.");
             $.ajax({
                 url: url,
@@ -436,8 +429,8 @@
                     }
 
                     if (!res.ProtocolVersion || res.ProtocolVersion !== "1.2") {
-                        $(connection).triggerHandler(events.onError, "You are using a version of the client that isn't compatible with the server. Client version 1.2, server version " + res.ProtocolVersion + ".");
-                        deferred.reject("You are using a version of the client that isn't compatible with the server. Client version 1.2, server version " + res.ProtocolVersion + ".");
+                        $(connection).triggerHandler(events.onError, "SignalR: Incompatible protocol version.");
+                        deferred.reject("SignalR: Incompatible protocol version.");
                         return;
                     }
 
@@ -717,8 +710,6 @@
                 url = baseUrl + connection.appRelativeUrl + "/ping",
                 deferral = $.Deferred();
 
-            url = this.addQs(url, connection);
-
             $.ajax({
                 url: url,
                 global: false,
@@ -743,28 +734,19 @@
         },
 
         addQs: function (url, connection) {
-            var appender = url.indexOf("?") !== -1 ? "&" : "?",
-                firstChar;
-            
             if (!connection.qs) {
                 return url;
             }
 
             if (typeof (connection.qs) === "object") {
-                return url + appender + $.param(connection.qs);
+                return url + "&" + $.param(connection.qs);
             }
 
             if (typeof (connection.qs) === "string") {
-                firstChar = connection.qs.charAt(0);
-
-                if (firstChar === "?" || firstChar === "&") {
-                    appender = "";
-                }
-
-                return url + appender + connection.qs;
+                return url + "&" + connection.qs;
             }
 
-            throw new Error("Connections query string property must be either a string or object.");
+            return url + "&" + window.encodeURIComponent(connection.qs.toString());
         },
 
         getUrl: function (connection, transport, reconnecting, appendReconnectUrl) {
@@ -831,7 +813,8 @@
                     }
                 },
                 error: function (errData, textStatus) {
-                    if (textStatus === "abort" || textStatus === "parsererror") {
+                    if (textStatus === "abort" ||
+                        (textStatus === "parsererror" && connection.ajaxDataType === "jsonp")) {
                         // The parsererror happens for sends that don't return any data, and hence
                         // don't write the jsonp callback to the response. This is harder to fix on the server
                         // so just hack around it on the client for now.
@@ -895,7 +878,13 @@
 
                 if (data.Messages) {
                     $.each(data.Messages, function () {
-                        $connection.triggerHandler(events.onReceived, [this]);
+                        try {
+                            $connection.triggerHandler(events.onReceived, [this]);
+                        }
+                        catch (e) {
+                            connection.log("Error raising received " + e);
+                            $(connection).triggerHandler(events.onError, [e]);
+                        }
                     });
                 }
 
@@ -945,7 +934,7 @@
                 $(connection).unbind(events.onReconnect, connection.keepAliveData.reconnectKeepAliveUpdate);
 
                 // Clear all the keep alive data
-                connection.keepAliveData = {};
+                keepAliveData = {};
                 connection.log("Stopping the monitoring of the keep alive");
             }
         },
@@ -1308,7 +1297,6 @@
         stop: function (connection) {
             if (connection && connection.eventSource) {
                 connection.log("EventSource calling close()");
-                connection.eventSource.ID = null;
                 connection.eventSource.close();
                 connection.eventSource = null;
                 delete connection.eventSource;
@@ -2003,5 +1991,5 @@
 /*global window:false */
 /// <reference path="jquery.signalR.core.js" />
 (function ($) {
-    $.signalR.version = "1.0.1";
+    $.signalR.version = "1.0.0.rc1";
 }(window.jQuery));
