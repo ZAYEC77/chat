@@ -186,10 +186,10 @@ FakesAssemblies/
 ###################
 *.com
 *.class
-*.dll
+#*.dll
 *.exe
 *.pdb
-*.dll.config
+#*.dll.config
 *.cache
 *.suo
 # Include dlls if they’re in the NuGet packages directory
@@ -240,7 +240,7 @@ TestResults/
 ehthumbs.db
 Icon?
 Thumbs.db
-[Bb]in
+#[Bb]in
 [Oo]bj
 [Tt]est[Rr]esults
 *.suo
@@ -256,3 +256,5 @@ _[Ss]cripts
 *.dot[Cc]over
 
 packages/
+[Bb]in/*
+![Bb]in/*.dll
