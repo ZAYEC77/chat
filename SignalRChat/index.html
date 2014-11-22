@@ -4,6 +4,7 @@
     <title></title>
 
     <link type="text/css" rel="stylesheet" href="Css/ChatStyle.css" />
+    <link type="text/css" rel="stylesheet" href="Content/bootstrap.css" />
     <link rel="stylesheet" href="/Css/JQueryUI/themes/base/jquery.ui.all.css">
 
 
@@ -13,7 +14,7 @@
     <!--Script references. -->
 
     <!--Reference the jQuery library. -->
-    <script src="/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="/Scripts/jquery-1.9.0.min.js"></script>
 
     <script src="/Scripts/ui/jquery.ui.core.js"></script>
     <script src="/Scripts/ui/jquery.ui.widget.js"></script>
@@ -30,11 +31,8 @@
     <script src="/signalr/hubs"></script>
 
     <script type="text/javascript">
-
         $(function () {
-
             setScreen(false);
-
             // Declare a proxy to reference the hub. 
             var chatHub = $.connection.chatHub;
 
@@ -42,22 +40,15 @@
 
             // Start Hub
             $.connection.hub.start().done(function () {
-
                 registerEvents(chatHub)
-
             });
-
         });
 
         function setScreen(isLogin) {
-
             if (!isLogin) {
-
                 $("#divChat").hide();
                 $("#divLogin").show();
-            }
-            else {
-
+            } else {
                 $("#divChat").show();
                 $("#divLogin").hide();
             }
@@ -66,18 +57,15 @@
 
         function registerEvents(chatHub) {
 
-            $("#btnStartChat").click(function () {
-
+            $("#btnStartChat").click(function (e) {
+                e.preventDefault(e);
                 var name = $("#txtNickName").val();
                 if (name.length > 0) {
                     chatHub.server.connect(name);
-                }
-                else {
+                } else {
                     alert("Please enter name");
                 }
-
             });
-
 
             $('#btnSendMsg').click(function () {
 
@@ -110,7 +98,6 @@
 
             // Calls when user successfully logged in
             chatHub.client.onConnected = function (id, userName, allUsers, messages) {
-
                 setScreen(true);
 
                 $('#hdId').val(id);
@@ -236,11 +223,9 @@
                           '<div  style="float:right;">' +
                               '<img id="imgDelete"  style="cursor:pointer;" src="/Images/delete.png"/>' +
                            '</div>' +
-
                            '<span class="selText" rel="0">' + userName + '</span>' +
                        '</div>' +
                        '<div id="divMessage" class="messageArea">' +
-
                        '</div>' +
                        '<div class="buttonBar">' +
                           '<input id="txtPrivateMessage" class="msgText" type="text"   />' +
@@ -288,56 +273,51 @@
 
                 }
             });
-
-            ////$div.resizable({
-            ////    stop: function () {
-
-            ////    }
-            ////});
-
         }
-
     </script>
-
 </head>
 <body>
-    <div id="header">
-        SignalR Chat Room
-    </div>
-    <br />
-    <br />
-    <br />
+    <div class="container">
 
-    <div id="divContainer">
-        <div id="divLogin" class="login">
-            <div>
-                Your Name:<br />
-                <input id="txtNickName" type="text" class="textBox" />
-            </div>
-            <div id="divButton">
-                <input id="btnStartChat" type="button" class="submitButton" value="Start Chat" />
-            </div>
+        <div id="header">
+            SignalR Chat Room
         </div>
 
-        <div id="divChat" class="chatRoom">
-            <div class="title">
-                Welcome to Chat Room [<span id='spanUser'></span>]
+        <div id="divContainer" class="bs-component">
+            <div class="modal-dialog">
 
-            </div>
-            <div class="content">
-                <div id="divChatWindow" class="chatWindow">
+                <div id="divLogin" class="login modal-content">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label" for="txtNickName">Your Name:</label>
+                            <input type="text" class="form-control" id="txtNickName" />
+                        </div>
+                        <button id="btnStartChat" class="btn btn-primary">Start Chat</button>
+
+                    </form>
                 </div>
-                <div id="divusers" class="users">
+            </div>
+
+            <div id="divChat" class="chatRoom">
+                <div class="title">
+                    Welcome to Chat Room [<span id='spanUser'></span>]
+
+                </div>
+                <div class="content">
+                    <div id="divChatWindow" class="chatWindow">
+                    </div>
+                    <div id="divusers" class="users">
+                    </div>
+                </div>
+                <div class="messageBar">
+                    <input class="textbox" type="text" id="txtMessage" />
+                    <input id="btnSendMsg" type="button" value="Send" class="submitButton" />
                 </div>
             </div>
-            <div class="messageBar">
-                <input class="textbox" type="text" id="txtMessage" />
-                <input id="btnSendMsg" type="button" value="Send" class="submitButton" />
-            </div>
+
+            <input id="hdId" type="hidden" />
+            <input id="hdUserName" type="hidden" />
         </div>
-
-        <input id="hdId" type="hidden" />
-        <input id="hdUserName" type="hidden" />
     </div>
 
 </body>
