@@ -3,12 +3,21 @@
     padding: 0px;
     margin: 0px;
 }
+.close-btn{
+    cursor: pointer;
+}
+.bs-component .single-chat {
+    z-index: 9999999;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    -webkit-background-clip: padding-box;
+}
 
 #header
 {
     padding: 20px;
     background-color: #d7e5e4;
-    border-bottom: #5f9482 solid 2px;
     color: #1e4638;
     font-size: 24px;
 }
@@ -16,7 +25,6 @@
 .submitButton
 {
     background-color: #d7e5e4;
-    border: #5f9482 solid 1px;
     padding: 4px;
     cursor: pointer;
 }
@@ -32,7 +40,6 @@
     margin-left: auto;
     margin-right: auto;
     padding: 10px;
-    border: solid 2px #5f9482;
     color: #1e4638;
 }
 
@@ -61,18 +68,26 @@
         font-weight: bold;
         padding: 8px;
         background-color: #d7e5e4;
-        border-bottom: solid 1px #5f9482;
     }
 
+    .chatRoom .panel-body{
+        padding-top:0;
+    }
+    .chatRoom .content.row
+    {
+        border-bottom: 1px solid #D7D7D7;
+    }
     .chatRoom .content
     {
-        min-height: 300px;
         clear: both;
     }
 
         .chatRoom .content .chatWindow
         {
-            min-height: 260px;
+            padding-top: 10px;
+            height: 260px;
+            overflow-y: scroll;
+            border-right: 1px solid #D7D7D7;
         }
 
             .chatRoom .content .chatWindow .message
@@ -96,7 +111,6 @@
                 cursor: pointer;
                 padding: 4px;
                 background-color: #f9f9f9;
-                border-bottom: solid 1px #5f9482;
             }
 
             .chatRoom .content .users .loginUser
@@ -104,7 +118,6 @@
                 display: block;
                 padding: 4px;
                 color: gray;
-                border-bottom: solid 1px #5f9482;
             }
 
             .chatRoom .content .users .user:hover
@@ -136,7 +149,6 @@
 .draggable
 {
     position: absolute;
-    border: #5f9482 solid 1px !important;
     width: 250px;
 }
 
@@ -144,7 +156,6 @@
     {
         cursor: move;
         background-color: #d7e5e4;
-        border-bottom: #5f9482 solid 1px;
         color: #1e4638;
     }
 
@@ -156,10 +167,8 @@
 
     .draggable .messageArea
     {
-        width: 250px;
         overflow-y: scroll;
         height: 200px;
-         border-bottom: #5f9482 solid 1px;
     }
 
         .draggable .messageArea .message

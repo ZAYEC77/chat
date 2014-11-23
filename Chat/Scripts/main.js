@@ -1,5 +1,12 @@
 ﻿
 $(function () {
+    $('#divChat').draggable({
+
+        handle: ".header",
+        stop: function () {
+
+        }
+    });
     setScreen(false);
     // Declare a proxy to reference the hub. 
     var chatHub = $.connection.chatHub;
@@ -103,7 +110,7 @@ function registerClientMethods(chatHub) {
         $('#' + ctrId).remove();
 
 
-        var disc = $('<div class="disconnect">"' + userName + '" logged off.</div>');
+        var disc = $('<div class="disconnect">" Користувач ' + userName + ' " вийшов.</div>');
 
         $(disc).hide();
         $('#divusers').prepend(disc);
@@ -128,7 +135,7 @@ function registerClientMethods(chatHub) {
 
         }
 
-        $('#' + ctrId).find('#divMessage').append('<div class="message"><span class="userName">' + fromUserName + '</span>: ' + message + '</div>');
+        $('#' + ctrId).find('#divMessage').append('<div class="message"><span class="userName badge">' + fromUserName + ':</span> ' + message + '</div>');
 
         // set scrollbar
         var height = $('#' + ctrId).find('#divMessage')[0].scrollHeight;
@@ -168,7 +175,7 @@ function AddUser(chatHub, id, name) {
 }
 
 function AddMessage(userName, message) {
-    $('#divChatWindow').append('<div class="message"><span class="userName">' + userName + '</span>: ' + message + '</div>');
+    $('#divChatWindow').append('<div class="message"><span class="userName badge">' + userName + ':</span> ' + message + '</div>');
 
     var height = $('#divChatWindow')[0].scrollHeight;
     $('#divChatWindow').scrollTop(height);
@@ -186,18 +193,24 @@ function OpenPrivateChatWindow(chatHub, id, userName) {
 
 function createPrivateChatWindow(chatHub, userId, ctrId, userName) {
 
-    var div = '<div id="' + ctrId + '" class="ui-widget-content draggable" rel="0">' +
-               '<div class="header">' +
-                  '<div  style="float:right;">' +
-                      '<i id="imgDelete"  class="glyphicon glyphicon-remove" src="/Images/delete.png"></i>' +
+    var div = '<div id="' + ctrId + '" class="ui-widget-content draggable single-chat panel panel-primary cursor" rel="0">' +
+               '<div class="header panel-heading">' +
+                  '<div class="pull-right">' +
+                      '<i id="imgDelete"  class="glyphicon glyphicon-remove close-btn" ></i>' +
                    '</div>' +
-                   '<span class="selText" rel="0">' + userName + '</span>' +
+                   '<h3 class="panel-title">'+
+                   userName +
+                   '</h3>'+
                '</div>' +
                '<div id="divMessage" class="messageArea">' +
                '</div>' +
-               '<div class="buttonBar">' +
-                  '<input id="txtPrivateMessage" class="msgText" type="text"   />' +
-                  '<input id="btnSendMessage" class="submitButton button" type="button" value="Send"   />' +
+               '<div class="form-group">' +
+               '<div class="input-group">' +
+                  '<input type="text" id="txtPrivateMessage" class="form-control"/>' +
+                  '<span class="input-group-btn">'+
+                  '<input id="btnSendMessage" class="btn btn-primary" type="button" value="Надіслати"/>' +
+                  '</span>'+
+               '</div>' +
                '</div>' +
             '</div>';
 

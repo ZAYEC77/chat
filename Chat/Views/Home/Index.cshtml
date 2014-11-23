@@ -1,7 +1,7 @@
-﻿<div class="container">
+﻿<div class="container pabel panel-primary">
 
-    <div id="header">
-        Супер-Чат
+    <div class="panel-heading">
+        <h3  class="panel-title">Супер-Чат</h3>
     </div>
 
     <div id="divContainer" class="bs-component">
@@ -10,19 +10,19 @@
             <div id="divLogin" class="login modal-content">
                 <form>
                     <div class="form-group">
-                        <label class="control-label" for="txtNickName">Your Name:</label>
+                        <label class="control-label" for="txtNickName">Ваш логін:</label>
                         <input type="text" class="form-control" id="txtNickName" />
                     </div>
-                    <button id="btnStartChat" class="btn btn-primary">Start Chat</button>
+                    <button id="btnStartChat" class="btn btn-primary">Увійти в чат</button>
 
                 </form>
             </div>
         </div>
 
-        <div id="divChat" class="chatRoom panel panel-primary">
+        <div id="divChat" class="ui-widget-content chatRoom panel panel-primary modal-content">
 
-            <div class="title panel-heading">
-                <h3 class="panel-title">Welcome to Chat Room [<span id='spanUser'></span>]</h3>
+            <div class="title header panel-heading">
+                <h3 class="panel-title">Головний час, Ви увійшли як "<span id='spanUser'></span>"</h3>
             </div>
             <div class="panel-body">
                 <div class="content row">
@@ -31,9 +31,14 @@
                     <div id="divusers" class="users col-md-4">
                     </div>
                 </div>
-                <div class="messageBar">
-                    <input class="textbox" type="text" id="txtMessage" />
-                    <input id="btnSendMsg" type="button" value="Send" class="submitButton" />
+                <div class="form-group">
+                  <label class="control-label">Повідомлення:</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" type="text" id="txtMessage" >
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary" id="btnSendMsg" type="button">Надіслати</button>
+                    </span>
+                  </div>
                 </div>
             </div>
 
