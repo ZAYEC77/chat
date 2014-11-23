@@ -22,9 +22,8 @@ namespace Chat
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css",
-                        "~/Css/ChatStyle.css",
-                        "~/Content/bootstrap.css",
-                        "~/Css/JQueryUI/themes/base/jquery.ui.all.css"
+                        "~/Content/ChatStyle.css",
+                        "~/Content/bootstrap.css"
                         ));
 
             bundles.Add(new ScriptBundle("~/scripts").Include(

@@ -189,7 +189,7 @@ function createPrivateChatWindow(chatHub, userId, ctrId, userName) {
     var div = '<div id="' + ctrId + '" class="ui-widget-content draggable" rel="0">' +
                '<div class="header">' +
                   '<div  style="float:right;">' +
-                      '<img id="imgDelete"  style="cursor:pointer;" src="/Images/delete.png"/>' +
+                      '<i id="imgDelete"  class="glyphicon glyphicon-remove" src="/Images/delete.png"></i>' +
                    '</div>' +
                    '<span class="selText" rel="0">' + userName + '</span>' +
                '</div>' +
