@@ -92,13 +92,13 @@ function registerClientMethods(chatHub) {
         }
 
 
-    }
+    };
 
     // On New User Connected
     chatHub.client.onNewUserConnected = function (id, name) {
 
         AddUser(chatHub, id, name);
-    }
+    };
 
 
     // On User Disconnected
@@ -116,12 +116,12 @@ function registerClientMethods(chatHub) {
         $('#divusers').prepend(disc);
         $(disc).fadeIn(200).delay(2000).fadeOut(200);
 
-    }
+    };
 
     chatHub.client.messageReceived = function (userName, message) {
 
         AddMessage(userName, message);
-    }
+    };
 
 
     chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message) {
@@ -141,8 +141,11 @@ function registerClientMethods(chatHub) {
         var height = $('#' + ctrId).find('#divMessage')[0].scrollHeight;
         $('#' + ctrId).find('#divMessage').scrollTop(height);
 
-    }
+    };
 
+    chatHub.client.onError = function (message) {
+        alert(message);
+    };
 }
 
 function AddUser(chatHub, id, name) {

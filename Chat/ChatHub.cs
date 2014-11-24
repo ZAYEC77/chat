@@ -23,7 +23,7 @@ namespace Chat
             var id = Context.ConnectionId;
 
 
-            if (ConnectedUsers.Count(x => x.ConnectionId == id) == 0)
+            if (ConnectedUsers.Count(x => x.ConnectionId == id || x.UserName == userName) == 0)
             {
                 ConnectedUsers.Add(new UserDetail { ConnectionId = id, UserName = userName });
 
@@ -32,7 +32,11 @@ namespace Chat
 
                 // send to all except caller client
                 Clients.AllExcept(id).onNewUserConnected(id, userName);
-
+            }
+            else
+            {
+                var message = String.Format("Не може бути двох користувачів з логіном '{0}'", userName);
+                Clients.Caller.onError(message);
             }
 
         }
